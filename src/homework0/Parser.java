@@ -6,7 +6,7 @@ import java.lang.String;
 
 public class Parser {
 
-
+ /*test*/
 	public static void main(String[] args) throws IOException{ 
 		Scanner console = new Scanner(System.in);
 		Scanner lineTokenizer = new Scanner(console.nextLine());
