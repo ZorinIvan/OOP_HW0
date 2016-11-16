@@ -6,7 +6,11 @@ import java.lang.String;
 
 public class Parser {
 
-
+	/**
+	 * @requires file name (command line argument). example: test.txt
+	 * @modifies 
+	 * @effects print all comments from input file
+	 */
 	public static void main(String[] args) throws IOException{ 
 
 		if(args.length != 1) //check input
@@ -19,11 +23,11 @@ public class Parser {
 
 		try{
 	
-			BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName)); //read input file
 			String line;
 			int flag = 0;
 			
-			while((line= bufferedReader.readLine()) != null)
+			while((line= bufferedReader.readLine()) != null) //parse the input file
 			{
 				String[] result1 = line.split("//");
 				String[] result2 = line.split("/+\\*");
@@ -40,15 +44,16 @@ public class Parser {
 
 					//System.out.println("tmpString length " + tmpString.length);
 					System.out.println(line);
-				}
+				}//if(flag == 1)
 				
 				if(result1.length != 1)//found //
 				{
 					System.out.println(result1[1]);
 				}
+				
 				if (result2.length != 1 && flag!=1) // found /*
 				{
-					String[] tmpString = result2[1].split("\\*+/");
+					String[] tmpString = result2[1].split("\\*+/");//found */ on the same line. 
 					if(tmpString.length != 1)
 					{
 						System.out.println(tmpString[0]);
@@ -65,6 +70,7 @@ public class Parser {
 			}//while
 			
 			bufferedReader.close();
+			
 		} catch (FileNotFoundException fileNotFound){
 			 System.err.println("Error. File \"" + fileName + "\" not found" );
 		}
