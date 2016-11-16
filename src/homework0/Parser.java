@@ -9,35 +9,56 @@ public class Parser {
 
 	public static void main(String[] args) throws IOException{ 
 
-		String fileName = getInput();
-		if(fileName == null)
+		if(args.length != 1) //check input
 		{
+			System.err.println("Error. Wrong number of arguments" );
 			return;
 		}
+		
+		String fileName = args[0];
+
 		try{
 	
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
 			String line;
+			int flag = 0;
 			
 			while((line= bufferedReader.readLine()) != null)
 			{
 				String[] result1 = line.split("//");
 				String[] result2 = line.split("/+\\*");
-				if(result1.length != 1)
+				
+				if(flag == 1)//we have /* in previous line
+				{
+					if(line.contains("*/"))
+					{
+						String[] tmpString = line.split("\\*+/");
+						System.out.println(tmpString[0]);
+						flag = 0;
+						continue;
+					}
+
+					//System.out.println("tmpString length " + tmpString.length);
+					System.out.println(line);
+				}
+				
+				if(result1.length != 1)//found //
 				{
 					System.out.println(result1[1]);
 				}
-				if (result2.length != 1) // found /*
+				if (result2.length != 1 && flag!=1) // found /*
 				{
-					while((line= bufferedReader.readLine()) != null)
+					String[] tmpString = result2[1].split("\\*+/");
+					if(tmpString.length != 1)
 					{
-						String[] result3 = result2[1].split("\\*+/");
-						if (result3.length != 1)
-						{
-							System.out.println(result3[0]);
-						}
-						System.out.println(line);
+						System.out.println(tmpString[0]);
+						flag = 0;
+						continue;
 					}
+					
+					System.out.println(result2[1]);
+					flag = 1;
+					continue;
 
 				}
 	
@@ -47,28 +68,6 @@ public class Parser {
 		} catch (FileNotFoundException fileNotFound){
 			 System.err.println("Error. File \"" + fileName + "\" not found" );
 		}
-	}
-	
-
-	/**
-	 * @return file name if input is valid
-	 * otherwise returns null
-	 */
-	public static String getInput (){
-		Scanner console = new Scanner(System.in);
-		Scanner lineTokenizer = new Scanner(console.nextLine());
-		String fileName = lineTokenizer.next();
-		
-		if(lineTokenizer.hasNext())
-		{
-			System.err.println("Error. Wrong number of arguments" );
-			console.close();
-			lineTokenizer.close();
-			return null;
-		}
-		console.close();
-		lineTokenizer.close();
-		return fileName;
 	}
 
 }
