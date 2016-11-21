@@ -1,0 +1,25 @@
+*
+ * A simple object that has a volume.
+ 
+*
+     * @requires volume > 0
+     * @modifies this
+     * @effects Creates and initializes new Ball object with the specified
+     *  		volume.
+     
+ TODO: Add your code here
+*
+	 * @requires volume > 0
+	 * @modifies this
+	 * @effects Sets the volume of the Ball.
+	 
+ TODO: Add your code here
+*
+     * @return the volume of the Ball.
+     
+ TODO: Add your code herefileNotFound){
+			 System.err.println("Error. File \"" + fileName + "\" not found" );
+		}
+	}
+
+}
